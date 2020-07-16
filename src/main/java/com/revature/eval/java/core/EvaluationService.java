@@ -1,7 +1,10 @@
 package com.revature.eval.java.core;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class EvaluationService {
 
@@ -17,12 +20,16 @@ public class EvaluationService {
 	 * 
 	 * Otherwise if it is positive, calculate the value of miles per hour, round it
 	 * and return it. For conversion and rounding use Math.round().
-	 */
+	 */ 
 	static class SpeedConverter {
 
 		public static long toMilesPerHour(double kilometersPerHour) {
 			// TODO Write an implementation for this method declaration
-			return 0;
+			if(kilometersPerHour<0) {
+				return -1;
+			}
+			long miPerHr = Math.round(kilometersPerHour* 0.621371);
+			return miPerHr;
 		}
 
 		/**
@@ -42,7 +49,11 @@ public class EvaluationService {
 		 */
 		public static String printConversion(double kilometersPerHour) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			long miPerHr = toMilesPerHour(kilometersPerHour);
+			if(miPerHr == -1) {
+				return "Invalid Value";
+			}
+			return kilometersPerHour + " km/h = " + miPerHr + " mi/h";
 		}
 	}
 
@@ -68,7 +79,13 @@ public class EvaluationService {
 	 */
 	public String printMegaBytesAndKiloBytes(int XX) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		if(XX < 0) {
+			return "Invalid Value";
+		}
+		double mB = XX*0.00097656;
+		int YY = (int) Math.floor(mB);
+		int ZZ = (int) Math.ceil((mB-YY)*1024);
+		return XX + " KB = " + YY +" MB and " + ZZ +" KB";
 	}
 
 	/**
@@ -92,7 +109,21 @@ public class EvaluationService {
 	 */
 	public boolean shouldWakeUp(boolean isBarking, int hourOfDay) {
 		// TODO Write an implementation for this method declaration
+		if(hourOfDay < 0 || hourOfDay > 23) {
+			//System.out.println("isBarking: "+ isBarking + " false hourOfDay: " + hourOfDay);
+			return false;
+			
+		}
+		else if(isBarking) {
+			if((hourOfDay >= 0 && hourOfDay <= 8) || hourOfDay == 22 || hourOfDay == 23) {
+				//System.out.println("isBarking: "+ isBarking + " true hourOfDay: "+ hourOfDay);
+				return true;
+				
+			}
+		}
+		//System.out.println("isBarking: "+ isBarking + " false hourOfDay: "+ hourOfDay);
 		return false;
+		
 	}
 
 	/**
@@ -108,7 +139,11 @@ public class EvaluationService {
 	 */
 	public boolean areEqualByThreeDecimalPlaces(double firstNum, double secondNum) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		//System.out.println("firstNum: " + firstNum +" secondNum: "+ secondNum);
+		firstNum *=1000;
+		secondNum *=1000;
+		//System.out.println((int) firstNum == (int) secondNum);
+		return (int) firstNum == (int) secondNum;
 	}
 
 	/**
@@ -125,6 +160,12 @@ public class EvaluationService {
 
 		public static boolean hasTeen(int x, int y, int z) {
 			// TODO Write an implementation for this method declaration
+			//System.out.println("x: "+ x +" y: "+ y + " z: "+ z);
+			if(isTeen(x) || isTeen(y) || isTeen(z)) {
+			//	System.out.println("x, y, or z is a teen!");
+				return true;
+			}
+			//System.out.println("There are no teens!");
 			return false;
 		}
 
@@ -133,6 +174,9 @@ public class EvaluationService {
 
 		public static boolean isTeen(int number) {
 			// TODO Write an implementation for this method declaration
+			if(number >= 13 & number <= 19) {
+				return true;
+			}
 			return false;
 		}
 	}
@@ -152,9 +196,25 @@ public class EvaluationService {
 	 * XX represents the original value minutes. YY represents the calculated years.
 	 * ZZ represents the calculated days.
 	 */
-	public String printYearsAndDays(long minutes) {
+	public String printYearsAndDays(long minutes) { 
 		// TODO Write an implementation for this method declaration
-		return null;
+		if(minutes < 0) {
+			//System.out.println("Invalid Value");
+			return "Invalid Value";
+		}
+		int year = 0;
+		int days;
+		if(minutes >= 525600) {
+			year = (int) Math.floor(minutes/525600);
+			days = (int) Math.floor((minutes%525600)/1440);
+		}
+		else {
+			days = (int) Math.floor(minutes/1440);
+		}
+		//System.out.println(minutes +" min = " + year + " y and " + days +" d");
+		return minutes +" min = " + year + " y and " + days +" d";
+		
+//		return null;
 	}
 
 	/**
@@ -168,7 +228,41 @@ public class EvaluationService {
 	 */
 	public String printNumberInWord(int number) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		switch(number) {
+			case 0:
+				//System.out.println("ZERO");
+				return "ZERO";
+			case 1:
+				//System.out.println("ONE");
+				return "ONE";
+			case 2:
+				//System.out.println("TWO");
+				return "TWO";
+			case 3:
+				//System.out.println("THREE");
+				return "THREE";
+			case 4:
+				//System.out.println("FOUR");
+				return "FOUR";
+			case 5:
+				//System.out.println("FIVE");
+				return "FIVE";
+			case 6:
+				//System.out.println("SIX");
+				return "SIX";
+			case 7:
+				//System.out.println("SEVEN");
+				return "SEVEN";
+			case 8:
+				//System.out.println("EIGHT");
+				return "EIGHT";
+			case 9:
+				//System.out.println("NINE");
+				return "NINE";
+			default:
+				//System.out.println("OTHER");
+				return "OTHER";
+		}
 	}
 
 	/**
@@ -192,6 +286,17 @@ public class EvaluationService {
 	 */
 	public int getGreatestCommonDivisor(int first, int second) {
 		// TODO Write an implementation for this method declaration
+		if(first < 10 || second < 10) {
+			//System.out.println("first: " + first +" second: "+ second + " GCD: " + -1);
+			return -1;
+		}
+		int minNum = Math.min(first, second);
+		for(int i = minNum; i>=0; i--) {
+			if(first%i == 0  && second%i == 0) {
+				//System.out.println("first: " + first +" second: "+ second + " GCD: " + i);
+				return i;
+			}
+		}
 		return 0;
 	}
 
@@ -210,7 +315,16 @@ public class EvaluationService {
 	 */
 	public int sumFirstAndLastDigit(int num) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		if(num < 0) {
+			return -1;
+		}
+		int last = num % 10;
+		while(num >= 10) {
+			num = num/10;
+		}
+		int first = num;
+		//System.out.println("num: " + num + " first: " + first + " last: " + last + "sum: " + (first+last));
+		return (first + last);
 	}
 
 	/**
@@ -221,7 +335,14 @@ public class EvaluationService {
 	 */
 	public String reverse(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String reverseStr = "";
+		int counter = string.length()-1;
+		while(counter >= 0) {
+			reverseStr += string.charAt(counter);
+			counter--;
+		}
+		//System.out.println(reverseStr);
+		return reverseStr;
 	}
 
 	/**
@@ -233,7 +354,13 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		String acr = "";
+		String[] acrList = phrase.toUpperCase().replace('-', ' ').split(" ");
+		for(int i = 0; i < acrList.length; i++) {
+			acr += acrList[i].charAt(0);
+		}
+		//System.out.println(acr);
+		return acr;
 	}
 
 	/**
@@ -289,17 +416,46 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			//System.out.println("isEquilateral");
+			//System.out.println("side1: " + getSideOne() + " side2: " + getSideTwo() + " side3: " + getSideThree());
+			if(getSideOne() == getSideTwo() && getSideTwo() == getSideThree()) {
+				//System.out.println(true);
+				return true;
+			}
+			//System.out.println(false);
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			//System.out.println("isIsosceles");
+			//System.out.println("side1: " + getSideOne() + " side2: " + getSideTwo() + " side3: " + getSideThree());
+			if(getSideOne() == getSideTwo()) {
+				//System.out.println(true);
+				return true;
+			}
+			else if ( getSideOne() == getSideThree()) {
+				//System.out.println(true);
+				return true;
+			}
+			else if(getSideTwo() == getSideThree()) {
+				//System.out.println(true);
+				return true;
+			}
+			//System.out.println(false);
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
-			return false;
+			//System.out.println("isScalene");
+			//System.out.println("side1: " + getSideOne() + " side2: " + getSideTwo() + " side3: " + getSideThree());
+			if(isIsosceles()) {
+				//System.out.println("isScalene is false");
+				return false;
+			}
+			//System.out.println("isScalene is true");
+			return true;
 		}
 
 	}
@@ -320,7 +476,34 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		string = string.toUpperCase();
+		int total = 0;
+		for(int i = 0; i<string.length(); i++) {
+			char charAtIndex = string.charAt(i);
+			if(charAtIndex == 'A' || charAtIndex == 'E' || charAtIndex =='I' || charAtIndex == 'O' || charAtIndex == 'U' || charAtIndex == 'L'|| charAtIndex == 'N'|| charAtIndex == 'R'|| charAtIndex == 'S'|| charAtIndex == 'T') {
+				total+=1;
+			}
+			else if(charAtIndex == 'D' || charAtIndex == 'G') {
+				total+=2;
+			}
+			else if(charAtIndex == 'B' || charAtIndex == 'C' || charAtIndex =='M' || charAtIndex == 'P') {
+				total+=3;
+			}
+			else if(charAtIndex == 'F' || charAtIndex == 'H' || charAtIndex =='V' || charAtIndex == 'W' || charAtIndex == 'Y') {
+				total+=4;
+			}
+			else if(charAtIndex == 'K') {
+				total+=5;
+			}
+			else if(charAtIndex == 'J' || charAtIndex == 'X') {
+				total+=8;
+			}
+			else if(charAtIndex == 'Q' || charAtIndex == 'Z') {
+				total+=10;
+			}
+		}
+		//System.out.println(string + " " + total);
+		return total;
 	}
 
 	/**
@@ -357,7 +540,42 @@ public class EvaluationService {
 	 * NANP-countries, only 1 is considered a valid country code.
 	 */
 	public String cleanPhoneNumber(String string) {
-		return null;
+		String str = "";
+		//System.out.println("string: "+ string);
+		string = String.join("", string.split(" "));
+		for(char s: string.toCharArray()) {
+			if(Character.isDigit(s)) {
+				str+=s;
+			}
+			else if("-.+()".indexOf(s) != -1) {
+				//System.out.println("has -.+()");
+				continue;
+			}
+			else if(Character.isLetter(s)) {
+				//System.out.println("throws an exception: Letters in number");
+				throw new IllegalArgumentException("Letters are not allowed in number!");
+			}
+			else {
+				//System.out.println("throws an exception: Not these characters!");
+				throw new IllegalArgumentException("These characters are not allowed!");
+			}
+		}
+		if(str.length()>11) {
+			//System.out.println("throws an exception: Number too long!");
+			throw new IllegalArgumentException("Number is too long!");
+		}
+		if(str.length() == 11) {
+			if(str.charAt(0) == '1') {
+				str = str.substring(1);
+			}
+			else {
+				//System.out.println("throws an exception: number is too long!");
+				throw new IllegalArgumentException("Number is too long!");
+			}
+		}
+		//System.out.println("return str: "+ str);
+		//System.out.println("======");
+		return str;
 	}
 
 	/**
@@ -370,7 +588,25 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		Map<String, Integer> counts = new HashMap<String, Integer>();
+		//System.out.println("string without formating: "+string);
+		string = string.replace(",", " ");
+		string = string.replace("\n", "");
+		//System.out.println("string with spaces enforced: "+string);
+		String[] strArr = string.split(" ");
+		for(int i = 0; i < strArr.length; i++) {
+			//System.out.println(strArr[i]);
+			if(!counts.containsKey(strArr[i])) {
+				counts.put(strArr[i], 1);
+			}
+			else {//counts has the key strArr[i], so find its value and increment it.
+				int value = counts.get(strArr[i]);
+				counts.put(strArr[i], value+1);
+			}
+		}
+		//System.out.println("now counts looks like: "+ counts);
+		//System.out.println("========");
+		return counts;
 	}
 
 	/**
@@ -388,6 +624,33 @@ public class EvaluationService {
 	 * a number is an Armstrong number.
 	 */
 	public boolean isArmstrongNumber(int input) {
+		int sum = 0;
+		String[] inputStr = Integer.toString(input).split("");
+		
+		int length = inputStr.length;
+		//System.out.println("input: " +input +" inputStr: "+inputStr +" length: "+length);
+		Map<String, Integer> digits = new HashMap<String, Integer>();
+		digits.put("0", 0);
+		digits.put("1", 1);
+		digits.put("2", 2);
+		digits.put("3", 3);
+		digits.put("4", 4);
+		digits.put("5", 5);
+		digits.put("6", 6);
+		digits.put("7", 7);
+		digits.put("8", 8);
+		digits.put("9", 9);
+	
+		for(int i = 0; i < length; i++) {
+			//System.out.println(Math.pow(digits.get(inputStr[i]),length));
+			sum+=Math.pow(digits.get(inputStr[i]),length);
+		}
+		//System.out.println("The sum is "+sum);
+		//System.out.println("Im here: " + (sum == input));
+		//System.out.println("====");
+		if(sum == input) {
+			return true;
+		}//*/
 		return false;
 	}
 
@@ -401,7 +664,41 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		ArrayList<Long> arr = new ArrayList<Long>();
+		long number = l;
+		long counter = 2L;
+		long factors;
+		
+		//System.out.println("long: "+ l);
+		while(counter<= number) {
+			factors = 0;
+			if(number%counter == 0) {
+				//check if number is prime before adding it to arr. 
+				//It turns out all such numbers entering this if statement are prime, but to be complete I will test for prime-ness here. 
+				//System.out.println("counter: " + counter + " is a factor of "+ number);
+				
+				for(int i = 2; i<counter; i++) {
+					if(counter%i == 0) {
+						factors+=1;
+					}
+				}
+				if(factors == 0) {
+					//System.out.println("counter: " + counter + " is in factor a PRIME factor of "+ number);
+					arr.add(counter);
+					number = number/counter;
+					counter = 2;
+				}
+			}
+			else {
+				counter++;
+			}
+		}
+		//for(int j = 0; j<arr.size(); j++) {
+		//	System.out.println("arr at index "+ j +" is " + arr.get(j));
+		//	System.out.println("type is "+ arr.get(j).getClass());
+		//}
+		//System.out.println("====");
+		return arr;
 	}
 
 	/**
@@ -416,8 +713,28 @@ public class EvaluationService {
 	 * numbers, pretend they don't exist and implement them yourself.
 	 */
 	public int calculateNthPrime(int k) {
-		// TODO Write an implementation for this method declaration
-		return 0;
+		// TODO Write an implementation for this method declaration 
+		if(k <= 0) {
+			//System.out.println("throws IllegalArgumentException becuase "+ k +" is less than one");
+			throw new IllegalArgumentException("k cannot be less than one!");
+		}
+		int currentPrime = 2;
+		int primes = 0;
+		int factors;
+		while(primes<k) {
+			factors = 0;
+			for(int i = 2; i<currentPrime; i++) {
+				if(currentPrime%i == 0) {
+					factors++;
+				}
+			}
+			if(factors == 0) {
+				primes+=1;
+			}
+			currentPrime++;
+		}
+		//System.out.println(k+"th prime is: " + (currentPrime-1));
+		return currentPrime-1;
 	}
 
 	/**
@@ -434,7 +751,18 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		String alphabet = "abcdefghijklmnopqrstuvwxyz";
+		//System.out.println("string: "+ string);
+		
+		for(int i  = 0; i <alphabet.length(); i++) {
+			if(string.indexOf(alphabet.charAt(i)) == -1) {
+				//System.out.println("returned false");
+				return false;
+			}
+		}
+		//System.out.println("returned true");
+		//System.out.println("=====");
+		return true;
 	}
 
 	/**
@@ -449,7 +777,32 @@ public class EvaluationService {
 	 * The sum of these multiples is 78.
 	 */
 	public int getSumOfMultiples(int i, int[] set) {
-		return 0;
+		Map<Integer, Integer> setOfmultiples = new HashMap<Integer, Integer>();
+		int sum = 0;
+		int setCounter = 0;
+		int multiplier = 1;
+		int multiple;
+		while(setCounter < set.length) {
+			multiple = multiplier*set[setCounter];
+			while(multiple < i) {
+				if(!setOfmultiples.containsKey(multiple)) {
+					setOfmultiples.put(multiple, 1);
+					sum+=multiple;
+				}
+				multiplier++;
+				multiple = multiplier*set[setCounter];
+			}
+			setCounter++;
+			multiplier = 1;
+		}
+		
+		//System.out.println("Given i: "+ i +" sum: "+ sum);
+		//System.out.println("Given set looks like: ");
+		//for(int j = 0; j<set.length; j++) {
+		//	System.out.println("set at index "+j+ " is "+ set[j]);
+		//}
+		//System.out.println("=====");
+		return sum;
 	}
 	
 	/**
@@ -463,7 +816,15 @@ public class EvaluationService {
 	 */
 	
 	public int[] threeLuckyNumbers() {
-		return null;
+		int[] luckyNums = new int[3]; 
+		for(int i = 0; i < 3; i++) {
+			Random randomInt = new Random();
+			luckyNums[i] = randomInt.nextInt(100) + 1;
+		}
+		for(int i = 0; i < 3; i++) {
+			//System.out.println("luckyNums at "+ i+ ": "+luckyNums[i]);			
+		}
+		return luckyNums;
 	}
 	
 	/*
@@ -477,6 +838,8 @@ public class EvaluationService {
 	 */
 	
 	public int guessingGame(int x, int y) {
-		return 0;
+		int z = (int) ((y-x)*Math.random() + x);
+		//System.out.println("z: "+z);
+		return z;
 	}
 }
